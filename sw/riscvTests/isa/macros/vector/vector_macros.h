@@ -319,4 +319,13 @@ int test_case;
 #define VSTORE_F64(vreg) VSTORE(double, e64, vreg, Rf64)
 #define VSTORE_F32(vreg) VSTORE(float, e32, vreg, Rf32)
 
+// Macros to set vector length equal to zero
+
+#define VSET_ZERO(VTYPE,LMUL)                                                              \
+  do {                                                                                     \
+    int vset_zero_buf;                                                                     \
+    asm volatile("li %0, 0" : "=r" (vset_zero_buf));                                       \
+    asm volatile("vsetvli x0, %0," #VTYPE "," #LMUL ", ta, ma \n" :: "r" (vset_zero_buf)); \
+  } while(0)
+
 #endif // __VECTOR_MACROS_H__

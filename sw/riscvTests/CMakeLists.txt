@@ -38,6 +38,9 @@ add_snitch_test(vwaddu isa/rv64uv/vwaddu.c)
 add_snitch_test(vwsub  isa/rv64uv/vwsub.c)
 add_snitch_test(vwsubu isa/rv64uv/vwsubu.c)
 
+add_snitch_test(vls isa/rv64uv/vls.c)
+add_snitch_test(vss isa/rv64uv/vss.c)
+
 add_snitch_test(vand isa/rv64uv/vand.c)
 add_snitch_test(vor  isa/rv64uv/vor.c)
 add_snitch_test(vxor isa/rv64uv/vxor.c)
@@ -128,3 +131,4 @@ add_snitch_test(vfcvt  isa/rv64uv/vfcvt.c)
 add_snitch_test(vfncvt isa/rv64uv/vfncvt.c)
 
 add_snitch_test(vfmv isa/rv64uv/vfmv.c)
+add_snitch_test(vfmvfs isa/rv64uv/vfmvfs.c)
