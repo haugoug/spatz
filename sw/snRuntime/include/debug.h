@@ -33,7 +33,7 @@ extern "C" {
 
 #endif  // defined(__SNRT_USE_TRACE)
 
-#if defined(__SNRT_USE_PRINT)
+#if 1 //defined(__SNRT_USE_PRINT)
 
 #include "printf.h"
 
