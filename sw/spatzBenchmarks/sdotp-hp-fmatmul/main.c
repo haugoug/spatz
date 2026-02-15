@@ -114,7 +114,7 @@ int main() {
     timer_start = benchmark_get_cycle();
 
     // Start dump
-    if (cid == 0)
+    if (likely(cid == 0))
       start_kernel();
 
     if (kernel_size == 2) {
@@ -131,7 +131,7 @@ int main() {
     snrt_cluster_hw_barrier();
 
     // End dump
-    if (cid == 0)
+    if (likely(cid == 0))
       stop_kernel();
 
     // End timer and check if new best runtime

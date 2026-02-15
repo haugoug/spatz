@@ -77,6 +77,7 @@ void snrt_alloc_init(struct snrt_team_root *team, uint32_t l3off) {
     // Allocator in L1 TCDM memory
     team->allocator.l1.base =
         ALIGN_UP((uint32_t)team->cluster_mem.start, MIN_CHUNK_SIZE);
+
     team->allocator.l1.size =
         (uint32_t)(team->cluster_mem.end - team->cluster_mem.start);
     team->allocator.l1.next = team->allocator.l1.base;

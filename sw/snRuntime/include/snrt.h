@@ -62,7 +62,16 @@ struct snrt_barrier {
 
 static inline size_t snrt_slice_len(snrt_slice_t s) { return s.end - s.start; }
 
-extern void snrt_cluster_hw_barrier();
+static inline void snrt_cluster_hw_barrier()
+{
+  asm volatile("" : : : "memory");
+
+  uint32_t var = *(uint32_t *)0x00120040;
+  asm volatile("addi x0, %[var], 0" : : [var] "r"(var));
+
+  asm volatile("" : : : "memory");
+}
+
 extern void snrt_cluster_sw_barrier();
 extern void snrt_global_barrier();
 extern void snrt_barrier(struct snrt_barrier *barr, uint32_t n);

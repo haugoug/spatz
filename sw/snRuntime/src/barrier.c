@@ -7,7 +7,7 @@
 extern void _snrt_cluster_barrier();
 
 /// Synchronize cores in a cluster with a hardware barrier
-void snrt_cluster_hw_barrier() { _snrt_cluster_barrier(); }
+//void snrt_cluster_hw_barrier() { _snrt_cluster_barrier(); }
 
 /// Synchronize cores in a cluster with a software barrier
 void snrt_cluster_sw_barrier() {

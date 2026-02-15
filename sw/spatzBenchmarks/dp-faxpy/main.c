@@ -71,6 +71,7 @@ int main() {
   // Calculate internal pointers
   double *x_int = x + dim_core * cid;
   double *y_int = y + dim_core * cid;
+  double a_val = *a;
 
   // Wait for all cores to finish
   snrt_cluster_hw_barrier();
@@ -80,21 +81,21 @@ int main() {
     start_kernel();
 
   // Start timer
-  if (cid == 0)
+  if (likely(cid == 0))
     timer = benchmark_get_cycle();
 
   // Call AXPY
 #ifdef UNROLL
-  faxpy_v64b_unrl(*a, x_int, y_int, dim_core);
+  faxpy_v64b_unrl(a_val, x_int, y_int, dim_core);
 #else
-  faxpy_v64b(*a, x_int, y_int, dim_core);
+  faxpy_v64b(a_val, x_int, y_int, dim_core);
 #endif
 
   // Wait for all cores to finish
   snrt_cluster_hw_barrier();
 
   // End timer and check if new best runtime
-  if (cid == 0)
+  if (likely(cid == 0))
     timer = benchmark_get_cycle() - timer;
 
   // End dump

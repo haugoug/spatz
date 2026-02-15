@@ -53,6 +53,7 @@ int main() {
     a = (double *)snrt_l1alloc(dotp_l.M * sizeof(double));
     b = (double *)snrt_l1alloc(dotp_l.M * sizeof(double));
     result = (double *)snrt_l1alloc(num_cores * sizeof(double));
+
   }
 
   // Initialize the matrices
@@ -76,8 +77,10 @@ int main() {
   if (cid == 0)
     start_kernel();
 
+  double *result_l = result;
+
   // Start timer
-  if (cid == 0)
+  if (likely(cid == 0))
     timer = benchmark_get_cycle();
 
   // Calculate dotp
@@ -87,28 +90,28 @@ int main() {
 #else
   acc = fdotp_v64b(a_int, b_int, dim);
 #endif
-  result[cid] = acc;
+  result_l[cid] = acc;
 
   // Wait for all cores to finish
   snrt_cluster_hw_barrier();
 
   // Final reduction
-  if (cid == 0) {
+  if (likely(cid == 0)) {
     for (unsigned int i = 1; i < num_cores; ++i)
-      acc += result[i];
-    result[0] = acc;
+      acc += result_l[i];
+    result_l[0] = acc;
   }
 
   // Wait for all cores to finish
   snrt_cluster_hw_barrier();
 
-  // End dump
-  if (cid == 0)
-    stop_kernel();
-
   // End timer and check if new best runtime
   if (cid == 0)
     timer = benchmark_get_cycle() - timer;
+
+  // End dump
+  if (likely(cid == 0))
+    stop_kernel();
 
   // Check and display results
   if (cid == 0) {
