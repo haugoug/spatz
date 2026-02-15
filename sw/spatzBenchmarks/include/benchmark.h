@@ -7,7 +7,10 @@
 
 #include "printf.h"
 
-size_t benchmark_get_cycle();
+static inline size_t benchmark_get_cycle() { return read_csr(mcycle); }
 
 void start_kernel();
 void stop_kernel();
+
+#define likely(x) __builtin_expect(x, 1)
+#define unlikely(x) __builtin_expect(x, 0)

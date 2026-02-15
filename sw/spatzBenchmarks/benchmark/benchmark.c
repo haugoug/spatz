@@ -9,8 +9,6 @@
 
 extern __thread struct snrt_team *_snrt_team_current;
 
-size_t benchmark_get_cycle() { return read_csr(mcycle); }
-
 void start_kernel() {
   uint32_t *bench =
       (uint32_t *)(_snrt_team_current->root->cluster_mem.end +

@@ -107,7 +107,7 @@ int main() {
   snrt_cluster_hw_barrier();
 
   // End dump
-  if (cid == 0)
+  if (likely(cid == 0))
     stop_kernel();
 
   // End timer

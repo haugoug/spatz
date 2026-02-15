@@ -89,7 +89,7 @@ int main() {
   timer = benchmark_get_cycle();
 
   // Start dump
-  if (cid == 0)
+  if (likely(cid == 0))
     start_kernel();
 
   // First stage
@@ -105,11 +105,11 @@ int main() {
   snrt_cluster_hw_barrier();
 
   // End dump
-  if (cid == 0)
+  if (likely(cid == 0))
     stop_kernel();
 
   // End timer and check if new best runtime
-  if (cid == 0)
+  if (likely(cid == 0))
     timer = benchmark_get_cycle() - timer;
 
   // Display runtime
